@@ -54,5 +54,18 @@ async def on_message(message):
         latency = bot.latency
         await message.channel.send(f"Pong! Latency: {latency*1000:.2f} ms")
 
+    if message.content.startswith('!lovecalc'):
+        try:
+            user_mentions = message.mentions
+            if len(user_mentions) < 2:
+                raise ValueError("Please mention two users for love calculation.")
+            
+            random.seed(user_mentions[0].id + user_mentions[1].id)
+            love_percentage = random.randint(0, 100)
+            
+            await message.channel.send(f"💘 {user_mentions[0].mention} and {user_mentions[1].mention}'s love percentage is {love_percentage}%!")
+        except ValueError as e:
+            await message.channel.send(str(e))
+
 # Run the bot with your token
-bot.run('BOT-TOKEN-HERE')
+bot.run('Bot-Token-Here')

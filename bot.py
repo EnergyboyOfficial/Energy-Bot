@@ -1,5 +1,6 @@
 import discord
 import psutil
+import random
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -44,6 +45,14 @@ async def on_message(message):
     if message.content.startswith('!stats'):
         system_stats = get_system_stats()
         await message.channel.send(system_stats)
+    
+    if message.content.startswith('!flip'):
+        coin_flip = 'Heads' if random.randint(0, 1) == 0 else 'Tails'
+        await message.channel.send(f"The coin landed on: {coin_flip}")
+    
+    if message.content.startswith('!ping'):
+        latency = bot.latency
+        await message.channel.send(f"Pong! Latency: {latency*1000:.2f} ms")
 
 # Run the bot with your token
-bot.run('Bot-Token-Here')
+bot.run('BOT-TOKEN-HERE')

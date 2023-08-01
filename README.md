@@ -2,7 +2,7 @@
 Simple or not so simple discord bot with many commands such as:
 
 # !Stats
-to see stats of the servers running the bot
+To see stats of the servers running the bot
 
 # !hello
 To say hello

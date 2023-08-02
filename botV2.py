@@ -28,18 +28,7 @@ def convert_bytes(bytes):
         i += 1
     return f"{bytes:.2f} {sizes[i]}"
 
-# List of dares
-dares = [
-    "Sing your favorite song out loud.",
-    "Do your best impression of a famous celebrity.",
-    "Send a funny meme to a random member in this server.",
-    "Change your Discord nickname to 'Daredevil' for the next hour.",
-    "Call a friend and tell them a ridiculous story to see if they believe it.",
-    "Take a selfie and post it in the server's selfie channel.",
-    # Add more dares here...
-]
-
-# List of truths
+# List of available truth questions
 truths = [
     "What is your biggest fear?",
     "What is your favorite food?",
@@ -47,11 +36,19 @@ truths = [
     "What is the most embarrassing thing that has happened to you?",
     "What is your hidden talent?",
     "Have you ever told a secret you promised to keep?",
-    # Add more truths here...
+    # Add more truth questions here
 ]
 
-# List of players for Spin the Bottle
-spin_the_bottle_players = []
+# List of available dare challenges
+dares = [
+    "Sing your favorite song out loud.",
+    "Do your best impression of a famous celebrity.",
+    "Send a funny meme to a random member in this server.",
+    "Change your Discord nickname to 'Daredevil' for the next hour.",
+    "Call a friend and tell them a ridiculous story to see if they believe it.",
+    "Take a selfie and post it in the server's selfie channel.",
+    # Add more dare challenges here
+]
 
 # Event handler for when the bot is ready and connected to Discord
 @bot.event
@@ -70,10 +67,6 @@ async def on_message(message):
     if message.content.startswith('!stats'):
         system_stats = get_system_stats()
         await message.channel.send(system_stats)
-    
-    if message.content.startswith('!flip'):
-        coin_flip = 'Heads' if random.randint(0, 1) == 0 else 'Tails'
-        await message.channel.send(f"The coin landed on: {coin_flip}")
     
     if message.content.startswith('!ping'):
         latency = bot.latency
@@ -100,25 +93,17 @@ async def on_message(message):
         dare = random.choice(dares)
         await message.channel.send(f"👀 {message.author.mention}, here's your dare challenge: {dare}")
 
-    if message.content.startswith('!spinthebottle'):
-        if message.author not in spin_the_bottle_players:
-            spin_the_bottle_players.append(message.author)
-            await message.channel.send(f"{message.author.mention} joined Spin the Bottle!")
+    if message.content.startswith('!send_to_all'):
+        if message.author.id == 'YOUR_USER_ID':  # Replace 'YOUR_USER_ID' with your own Discord user ID
+            args = message.content.split(' ', 1)
+            if len(args) < 2:
+                await message.channel.send("Please provide a message to send.")
+                return
 
-    if message.content.startswith('!endspinthebottle'):
-        if message.author in spin_the_bottle_players:
-            spin_the_bottle_players.remove(message.author)
-            await message.channel.send(f"{message.author.mention} left Spin the Bottle.")
-
-        if len(spin_the_bottle_players) == 0:
-            await message.channel.send("Spin the Bottle ended. No one is playing.")
-
-    if message.content.startswith('!spinit'):
-        if len(spin_the_bottle_players) < 2:
-            await message.channel.send("Not enough players to spin the bottle.")
-        else:
-            bottle_spinned = random.sample(spin_the_bottle_players, 2)
-            await message.channel.send(f"🍾 Bottle spinned! {bottle_spinned[0].mention} and {bottle_spinned[1].mention}, it's your turn! 🍾")
+            all_guilds = bot.guilds
+            for guild in all_guilds:
+                channel = guild.text_channels[0]  # Change this to the channel where you want to send the message
+                await channel.send(args[1])
 
 # Run the bot with your token
 bot.run('Bot-Token-Here')

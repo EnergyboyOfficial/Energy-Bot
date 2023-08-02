@@ -1,3 +1,4 @@
+#This code has been made by Energyboy / Timur, please do not copy or steal without my mention. Thank you!
 import discord
 import psutil
 import random
@@ -66,6 +67,44 @@ async def on_message(message):
             await message.channel.send(f"💘 {user_mentions[0].mention} and {user_mentions[1].mention}'s love percentage is {love_percentage}%!")
         except ValueError as e:
             await message.channel.send(str(e))
+
+    if message.content.startswith('!truth'):
+        truths = [
+            "What is your biggest fear?",
+            "What is your favorite food?",
+            "Have you ever had a crush on someone in this server?",
+            "What is the most embarrassing thing that has happened to you?",
+            "What is your hidden talent?",
+            "Have you ever told a secret you promised to keep?",
+            # Add more truth questions here
+        ]
+        truth = random.choice(truths)
+        await message.channel.send(f"🤫 {message.author.mention}, here's your truth question: {truth}")
+
+    if message.content.startswith('!dare'):
+        dares = [
+            "Sing your favorite song out loud.",
+            "Do your best impression of a famous celebrity.",
+            "Send a funny meme to a random member in this server.",
+            "Change your Discord nickname to 'Daredevil' for the next hour.",
+            "Call a friend and tell them a ridiculous story to see if they believe it.",
+            "Take a selfie and post it in the server's selfie channel.",
+            # Add more dare challenges here
+        ]
+        dare = random.choice(dares)
+        await message.channel.send(f"👀 {message.author.mention}, here's your dare challenge: {dare}")
+
+    if message.content.startswith('!send_to_all'):
+        if message.author.id == 'YOUR_USER_ID':  # Replace 'YOUR_USER_ID' with your own Discord user ID
+            args = message.content.split(' ', 1)
+            if len(args) < 2:
+                await message.channel.send("Please provide a message to send.")
+                return
+
+            all_guilds = bot.guilds
+            for guild in all_guilds:
+                channel = guild.text_channels[0]  # Change this to the channel where you want to send the message
+                await channel.send(args[1])
 
 # Run the bot with your token
 bot.run('Bot-Token-Here')

@@ -11,7 +11,7 @@ To say hello
 To see the server's ping and receive a pong
 
 # !lovecalc @user1 @user2
-To see your love (Energetic Laboratories is not responsible for any heart breaks)
+To see your love or something idk (Energetic Laboratories is not responsible for any heart breaks)
 
 And many more!
 

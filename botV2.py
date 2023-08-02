@@ -30,25 +30,16 @@ def convert_bytes(bytes):
 
 # List of available truth questions
 truths = [
-    "What is your biggest fear?",
-    "What is your favorite food?",
-    "Have you ever had a crush on someone in this server?",
-    "What is the most embarrassing thing that has happened to you?",
-    "What is your hidden talent?",
-    "Have you ever told a secret you promised to keep?",
-    # Add more truth questions here
+    # Add your truth questions here
 ]
 
 # List of available dare challenges
 dares = [
-    "Sing your favorite song out loud.",
-    "Do your best impression of a famous celebrity.",
-    "Send a funny meme to a random member in this server.",
-    "Change your Discord nickname to 'Daredevil' for the next hour.",
-    "Call a friend and tell them a ridiculous story to see if they believe it.",
-    "Take a selfie and post it in the server's selfie channel.",
-    # Add more dare challenges here
+    # Add your dare challenges here
 ]
+
+# List of players for Spin the Bottle game
+players = []
 
 # Event handler for when the bot is ready and connected to Discord
 @bot.event
@@ -104,6 +95,20 @@ async def on_message(message):
             for guild in all_guilds:
                 channel = guild.text_channels[0]  # Change this to the channel where you want to send the message
                 await channel.send(args[1])
+
+    if message.content.startswith('!spin_the_bottle'):
+        players.clear()
+        for mention in message.mentions:
+            players.append(mention)
+        if len(players) < 2:
+            await message.channel.send("Please mention at least two players for Spin the Bottle.")
+            return
+        
+        player1 = random.choice(players)
+        players.remove(player1)
+        player2 = random.choice(players)
+        
+        await message.channel.send(f"🍾 {player1.mention} spins the bottle... and it points to {player2.mention}! 🍾")
 
 # Run the bot with your token
 bot.run('Bot-Token-Here')

@@ -1,4 +1,4 @@
-# Energy-Bot V11
+# Gla-DOS V11
 Simple or not so simple discord bot with many commands such as:
 
 # !Stats
